@@ -50,38 +50,93 @@ If you have questions or ideas to improve this project, feel free to [open an is
 
 ---
 
-## Usage Instructions
+### Usage Instructions  
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/sunilprregmi/webtv-cloudflare-playlist.git
-   cd webtv-cloudflare-playlist
-   ```
+Follow these steps to set up and deploy the WebTV Cloudflare Playlist script:  
 
-2. **Setup Cloudflare Workers**:
-   - Ensure you have a Cloudflare account with access to Workers.
-   - Use the [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/get-started/) for deploying the script.
+---
 
-3. **Install Wrangler**:
+#### 1. **Get the Code**  
+
+You can either:  
+- **Clone the Repository**:
+  ```bash
+  git clone https://github.com/sunilprregmi/webtv-cloudflare-playlist.git
+  cd webtv-cloudflare-playlist
+  ```
+- **Copy the Script**:  
+  If you don't want to clone the repository, copy the code from `workers.js` in this repository.
+
+---
+
+#### 2. **Customize the Script**  
+
+Modify the script (`workers.js`) as per your requirements. For example:
+- Adjust the playlist generation logic.
+- Add or remove features.
+- Update API configurations if needed.
+
+---
+
+#### 3. **Set Up Cloudflare Workers**  
+
+1. **Sign In or Sign Up**  
+   - Visit [Cloudflare Workers](https://workers.cloudflare.com/) and log in or create a new account.
+
+2. **Create a New Worker**  
+   - Go to the **Workers** section and click **Create a Worker**.
+
+3. **Paste the Code**  
+   - Replace the default Worker code with your customized version of `workers.js`.
+
+---
+
+#### 4. **Set Up KV Namespace**  
+
+To store API tokens, create a KV Namespace:  
+
+1. **Create a Namespace**:  
+   - In the Cloudflare dashboard, go to **Workers** > **KV** > **Create Namespace**.  
+   - Name the namespace `webtvToken`.  
+
+2. **Add KV Pairs**:  
+   - Add the following keys and their respective values:  
+     - `access_token`
+     - `refresh_token`  
+
+3. **Bind Namespace to Worker**:  
+   - Go to **Workers** > **Your Worker** > **Settings** > **Bindings** > **Add Binding**.  
+   - Set the binding name to `webtvToken` (same as the namespace name).  
+
+---
+
+#### 5. **Deploy the Worker**  
+
+If you're using the Wrangler CLI:  
+1. Install Wrangler:  
    ```bash
    npm install -g wrangler
    ```
-
-4. **Login to Cloudflare**:
+2. Log in to Cloudflare:  
    ```bash
    wrangler login
    ```
-
-5. **Publish the Worker**:
+3. Publish the Worker:  
    ```bash
    wrangler publish
-   ```
+   ```  
 
-6. **Access Your Playlist**:
-   - Once deployed, your playlist will be available at your worker’s root URL:
-     ```
-     https://<your-worker-subdomain>.workers.dev/
-     ```
+Alternatively, save and deploy directly from the Cloudflare Workers dashboard.
+
+---
+
+#### 6. **Access Your Playlist**  
+
+Once deployed, your dynamically generated M3U8 playlist will be available at your worker's root URL:  
+```
+https://<your-worker-subdomain>.workers.dev/
+```
+---
 
 ## Token Refresh with Cron Jobs
 
