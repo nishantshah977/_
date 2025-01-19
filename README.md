@@ -182,6 +182,6 @@ This project is licensed under the [MIT License](LICENSE).
 ## Author
 
 - **Sunil Prasad Regmi**  
-  [LinkedIn](https://www.linkedin.com/in/sunil-prasad-regmi/)  
-  [Facebook](https://www.facebook.com/sunilprregmi/)
-  [Telegram](https://www.t.me/guruusr/)
+  - [LinkedIn](https://www.linkedin.com/in/sunil-prasad-regmi/)  
+  - [Facebook](https://www.facebook.com/sunilprregmi/)
+  - [Telegram](https://www.t.me/guruusr/)
