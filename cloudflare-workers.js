@@ -58,8 +58,8 @@ async function refreshTokens() {
 
   const refreshJsonResponse = await refreshResponse.json();
 
-  await webtvToken.put('access_token', refreshJsonResponse.access_token, { namespace: webtvToken });
-  await webtvToken.put('refresh_token', refreshJsonResponse.refresh_token, { namespace: webtvToken });
+  await webtvToken.put('access_token', refreshJsonResponse.access_token, { namespace: webtvToken }); // your namespace here
+  await webtvToken.put('refresh_token', refreshJsonResponse.refresh_token, { namespace: webtvToken }); // your namespace here
 }
 
 async function handlePlaylistRequest() {
