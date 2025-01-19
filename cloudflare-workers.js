@@ -14,14 +14,7 @@ async function handleRequest(request) {
     });
   }
 
-  if (path === '/') {
-    return await handlePlaylistRequest();
-  }
-
-  return new Response('Not found!', { 
-    status: 404, 
-    headers: { 'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*' } 
-  });
+  return await handlePlaylistRequest(); 
 }
 
 async function refreshTokens() {
