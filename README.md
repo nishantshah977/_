@@ -183,4 +183,4 @@ This project is licensed under a Custom [License](LICENSE) that explicitly prohi
 - **Sunil Prasad Regmi**  
   - [LinkedIn](https://www.linkedin.com/in/sunil-prasad-regmi/)  
   - [Facebook](https://www.facebook.com/sunilprregmi/)
-  - [Telegram](https://www.t.me/guruusr/)
+  - [Telegram](https://t.me/sunilpr)
