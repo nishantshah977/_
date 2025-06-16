@@ -1,6 +1,6 @@
 # 📺 WebTV Cloudflare Playlist
 
-A **Cloudflare Workers** script that dynamically generates M3U8 playlists using NetTV Nepal's WebTV API. It focuses on **Free-To-Air (FTA) Nepalese channels** and select international channels, offering a secure, flexible streaming experience across devices and platforms.
+A **Cloudflare Workers** script that dynamically generates M3U8 playlists using NetTV Nepal's WebTV API. It focuses on **Free-To-Air (FTA) Nepalese channels** and selected international channels, offering a secure, flexible streaming experience across devices and platforms.
 
 Designed for **personal use**, this project enables easy integration with popular media players while offering a clean, responsive login interface and multiple secure authentication options.
 
@@ -74,7 +74,7 @@ This tool is a **lightweight, personal-use supplement** to the official NetTV/We
 
 ### 1. Clone the Project
 
-Copy `public-workers.js` into your Cloudflare Worker project.
+Copy `workers.js` into your Cloudflare Worker project.
 
 ### 2. Configure KV Namespace
 
