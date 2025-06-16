@@ -1,186 +1,193 @@
-# WebTV Cloudflare Playlist
+# 📺 WebTV Cloudflare Playlist
 
-A Cloudflare Workers script designed to dynamically generate M3U8 playlists using NetTV Nepal's WebTV API. The script is tailored to fetch and organize only **Free-To-Air (FTA) Nepalese channels** along with a few international channels. This project provides an alternative way to experience these channels, allowing users to integrate them into their preferred media players or applications.
+A **Cloudflare Workers** script that dynamically generates M3U8 playlists using NetTV Nepal's WebTV API. It focuses on **Free-To-Air (FTA) Nepalese channels** and select international channels, offering a secure, flexible streaming experience across devices and platforms.
 
----
-
-## About This Project
-
-This script is not intended to replace the official NetTV app or WebTV website. Instead, it offers a supplementary, educational, and personal-use solution for those who prefer a flexible streaming experience. By leveraging Cloudflare Workers' serverless environment, the script provides:
-
-- **Ease of Access**: A simple URL endpoint delivers a dynamically generated M3U8 playlist.
-- **Customization**: Channels are categorized and organized for better usability.
-- **Scalability**: Cloudflare's infrastructure ensures high availability and performance.
-- **Dynamic Playlist Generation**: The script fetches live channel data from the NetTV WebTV API and formats it into an M3U8 playlist.
-- **Free-To-Air Channels**: Focuses exclusively on Free-To-Air Nepalese channels and a curated list of international channels.
-- **Category Organization**: Channels are neatly grouped into categories based on their genre or type.
-- **Token Refresh**: Automated session token renewal ensures uninterrupted access, configurable via Cron jobs.
-- **Cloudflare Workers Integration**: Deployed in a serverless environment, ensuring fast and efficient delivery of the playlist.
-
-Having an alternative way to explore Free-To-Air channels is always a good idea, especially for those who value portability and the ability to use their preferred media players.
+Designed for **personal use**, this project enables easy integration with popular media players while offering a clean, responsive login interface and multiple secure authentication options.
 
 ---
 
-## Why Use This Script? Key Benefits
+## 🎯 Project Overview
 
-- **Dynamic Playlist Generation**
-  - Creates and maintains an auto-updating playlist of Nepalese Free-To-Air channels
-  - Compatible with popular media players like VLC and Kodi
+This tool is a **lightweight, personal-use supplement** to the official NetTV/WebTV platforms. It is:
 
-- **Automated Token Management**
-  - Handles daily token refreshes automatically
-  - No manual intervention required for continuous streaming
-
-- **Device Flexibility**
-  - Access channels from any compatible device
-  - Not restricted to specific apps or platforms
-
-- **Personalized Experience**
-  - Choose your preferred media player
-  - Customize viewing experience while maintaining simplicity
-
-- **Complementary Solution**
-  - Works alongside official NetTV services
-  - Designed for personal use, not as a replacement
-  - Respects original service functionality
+* Fully hosted on **Cloudflare Workers** (no backend server required)
+* Optimized for mobile and desktop use with a **responsive login UI**
+* Compatible with **Ncell OTP login**, cookies, and JSON tokens
+* Perfect for those who want portable, cross-device streaming with control over authentication and session management
 
 ---
 
-### Setup and Deployment
+## ✨ Key Features
 
-Follow these steps to set up and deploy the WebTV Cloudflare Playlist script:  
+* 🔐 **Authentication Methods**
 
----
+  * 📱 **Ncell OTP Login**: Login using your Ncell number and a one-time password
+  * 🍪 **Session Cookie Login**: Paste your existing cookie for direct access
+  * 🧾 **JSON Token Login**: Use a saved login token JSON
 
-#### 1. **Get the Code**  
+* 🖥️ **Responsive Login Page**
 
-Copy the code from `workers.js` in this repository.
+  * Mobile-friendly, clean UI built for ease of use
+  * Works across phones, tablets, and desktops
 
----
+* 📺 **Dynamic M3U8 Playlist Generator**
 
-#### 2. **Customize the Script**  
+  * Real-time generation of updated channel playlists
+  * Compatible with players like VLC, Kodi, and IPTV apps
 
-Modify the script (`workers.js`) as per your requirements. For example:
+* 🗂️ **Organized Channel Categories**
 
-- **Necessary Customizations**:
-  - Update the `resourceUrl` with your LiveTV JSON URL:
-    ```javascript
-    const resourceUrl = 'https://livetv-resources.geniustv.geniussystems.com.np/subscriber/livetv/v1/namespaces/xxxx/subscribers/123xxxx/serial/tt_123xxxx2323xxx-xxxx'; // your livetv json url here
-    ```
-  - Update the `sessionUrl` with your session URL:
-    ```javascript
-    const sessionUrl = 'https://auth.geniustv.geniussystems.com.np/resellers/xxxx/subscribers/123xxxx/sessions'; // your session url here
-    ```
+  * Automatically groups channels into genres
 
-- **Optional Customizations (at your own risk)**:
-  - Access and refresh tokens using your namespace:
-    ```javascript
-    const accessToken = await webtvToken.get('access_token', { namespace: webtvToken }); // your namespace here
-    const refreshToken = await webtvToken.get('refresh_token', { namespace: webtvToken }); // your namespace here
-    await webtvToken.put('access_token', refreshJsonResponse.access_token, { namespace: webtvToken }); // your namespace here
-    await webtvToken.put('refresh_token', refreshJsonResponse.refresh_token, { namespace: webtvToken }); // your namespace here
-    ```
+* ⚡ **Serverless Performance**
 
-- **If You Are a Nerd**:
-  - Update the TV guide URL with your own:
-    ```m3u
-    x-tvg-url="https://github.com/sunilprregmi/webtv-epg/raw/refs/heads/main/webtv.xml.gz"
-    ```
+  * Hosted on Cloudflare’s global infrastructure
 
-   - Adjust the playlist generation logic.
-   - Add or remove features.
-   - Update API configurations if needed.
+* 🔒 **Cloudflare KV Token Storage**
+
+  * Tokens stored securely in the KV Namespace
+  * No exposure of sensitive login credentials
+
+* 🔁 **Automatic Token Refresh**
+
+  * Maintain continuous access with scheduled background refreshes
+
+* 📡 **WMS Signature Fetching**
+
+  * Supports stream authorization via WMS Auth
 
 ---
 
-#### 3. **Set Up KV Namespace**  
+## 🔌 API Endpoints
 
-To store API tokens, create a KV Namespace:  
-
-1. **Create a Namespace**:  
-   - In the Cloudflare dashboard, go to **Workers** > **KV** > **Create Namespace**.  
-   - Name the namespace `webtvToken`.  (May variate based on how you set on workers.js)
-
-2. **Add KV Pairs**:  
-   - Add the following keys and their respective values:  
-     - `access_token`
-     - `refresh_token`  
-
-3. **Bind Namespace to Worker**:  
-   - Go to **Workers** > **Your Worker** > **Settings** > **Bindings** > **Add Binding**.  
-   - Set the binding name to `webtvToken` (same as the namespace name).  
+| Method | Path        | Description                                         |
+| ------ | ----------- | --------------------------------------------------- |
+| GET    | `/login`    | Responsive login page for Ncell, Cookie, Token      |
+| GET    | `/playlist` | Generates the dynamic M3U8 playlist (auth required) |
+| GET    | `/api`      | Returns structured JSON metadata (channel/category) |
+| GET    | `/refresh`  | Refreshes the session token                         |
+| GET    | `/wms`      | Retrieves WMS authentication signature              |
 
 ---
 
-#### 4. **Set Up Cloudflare Workers**  
+## 🛠 Setup Guide
 
-1. **Sign In or Sign Up**  
-   - Visit [Cloudflare Workers](https://workers.cloudflare.com/) and log in or create a new account.
+### 1. Clone the Project
 
-2. **Create a New Worker**  
-   - Go to the **Workers** section and click **Create a Worker**.
+Copy `public-workers.js` into your Cloudflare Worker project.
 
-3. **Paste the Code**  
-   - Replace the default Worker code with your customized version of `workers.js`.
+### 2. Configure KV Namespace
+
+* Go to your [Cloudflare Dashboard](https://dash.cloudflare.com)
+* Navigate to **Workers & Pages → KV**
+* Create a namespace: `geniusTVtoken`
+* Bind it to your Worker using the same name
+
+### 3. Deploy
+
+Use Cloudflare’s UI or Wrangler CLI to deploy your worker.
 
 ---
 
-#### 5. **Access Your Playlist**  
+## ⏯ Usage Instructions
 
-Once deployed, your dynamically generated M3U8 playlist will be available at your worker's root URL:  
+* Open `/login` to authenticate with Ncell, Cookie, or JSON Token
+* After login:
+
+  * Access `/playlist` for your M3U8 stream
+  * Use `/api` for metadata
+  * Trigger `/refresh` to manually refresh the token if needed
+
+Your live playlist will be available at:
+
 ```
-https://<your-worker-subdomain>.workers.dev/
+https://<your-worker-subdomain>.workers.dev/playlist
 ```
-Example of output M3U8 Playlist:
+
+### 📄 Example M3U8 Output:
+
 ```m3u
-#EXTM3U x-tvg-url="https://github.com/sunilprregmi/webtv-epg/raw/refs/heads/main/webtv.xml.gz"
+#EXTM3U x-tvg-url="https://epgs.sunilprasad.com.np/webtv.xml.gz"
+# FOSS Project Of Sunil Prasad @ sunilprasad.com.np
 
-#EXTINF:-1 tvg-id="channel1" tvg-chno="1" tvg-name="example-channel" tvg-country="np" tvg-logo="https://example.com/logo.png" group-title="News", Example Channel
-#EXTVLCOPT:http-user-agent=NetTV/3.2.1
-https://example.com/stream.m3u8?wmsAuthSign=<auth-signature>
+# STRICT WARNING: This is a private server.
+# No one is authorized to use this except owner him/herself.
+# Do not share, misuse, or attempt to access these tokens or credentials.
+# Providers can open issue on github for any discussions.
+# Unauthorized access or takedown attempts will face legal consequences.
+
+#EXTINF:-1 tvg-id="channel1" tvg-chno="1" tvg-name="example-channel" tvg-country="np" tvg-logo="https://webtv-xyz.geniusxxx.com.np/channel/xx/logo" group-title="News", Example Channel
+#KODIPROP:inputstream=inputstream.adaptive
+#KODIPROP:inputstream.adaptive.manifest_type=hls
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://webtv-xyz.geniusxxx.com.np/stream.m3u8?wmsAuthSign=lkasmflkasmfmflamskfmaslfsafangjnrhne==
+...
 ```
 
 ---
 
-#### 6. Token Refresh with Cron Jobs
+## 🕐 Automate Token Refresh
 
-To refresh session tokens daily, you can use [cron-job.org](https://console.cron-job.org/login) to schedule automatic calls to your worker's `/refresh` endpoint. Here's how to set it up:
+To automatically refresh tokens daily:
 
-1. Visit [cron-job.org](https://console.cron-job.org/login) and create an account or log in
-2. Click "Create cronjob" button
-3. Set the following configuration:
-   - Title: WebTV Token Refresh
-   - URL: `https://<your-worker-subdomain>.workers.dev/refresh`
-   - Schedule: Every 24 hours (select "Once per day" in the schedule options)
-   - Timing: Choose your preferred time of day
-4. Click "Create" to activate the cron job
+1. Go to [cron-job.org](https://console.cron-job.org)
+2. Create a new job:
 
-The cron job will automatically call your refresh endpoint once every 24 hours to maintain active session tokens.
+   * **URL**: `https://<your-worker-subdomain>.workers.dev/refresh`
+   * **Schedule**: Once every 24 hours
+   * **Title**: WebTV Token Refresh
+   * Set your preferred time
 
----
-
-## Disclaimer
-
-This project is intended **only for personal and educational purposes** and is **not affiliated with**:
-
-- NetTV Nepal
-- GeniusSystem
-- NewITVenture Corp
-- WorldLink Communication  
-
-All users are solely responsible for ensuring that they comply with applicable copyright laws and streaming regulations. The author assumes no liability for misuse or unauthorized access.
+This keeps your session live with no manual actions.
 
 ---
 
-## License
+## ❓ Why Choose This?
 
-This project is licensed under a Custom [License](LICENSE) that explicitly prohibits commercial use. All rights reserved.
+* ✅ **Responsive UI**: Works well on any device
+* ✅ **Multi-login Support**: Ncell, Cookies, or Token JSON
+* ✅ **Portable Access**: Compatible with your favorite media players
+* ✅ **Fully Serverless**: No backend to maintain
+* ✅ **Secure**: Tokens stored in Cloudflare KV
+* ✅ **Always Updated**: Real-time playlist and channel metadata
 
 ---
 
-## Author
+## 🔒 Security Notice
 
-- **Sunil Prasad Regmi**  
-  - [LinkedIn](https://www.linkedin.com/in/sunil-prasad-regmi/)  
-  - [Facebook](https://www.facebook.com/sunilprregmi/)
-  - [Telegram](https://t.me/sunilpr)
+* Do **not share** your tokens or playlist URLs.
+* All credentials are stored securely and are encrypted via KV.
+* Misuse or public exposure will result in access termination.
+
+---
+
+## ⚠️ Disclaimer
+
+This tool is intended strictly for:
+
+* **Personal and educational purposes**
+* **Not affiliated with**:
+
+  * NetTV Nepal
+  * GeniusSystem
+  * NewITVenture
+  * WorldLink
+
+> All users are solely responsible for ensuring that they comply with applicable copyright laws and streaming regulations. The author assumes no liability for misuse or unauthorized access.
+
+---
+
+## 📝 License
+
+This project is under a **Custom License**:
+**No commercial use permitted**. See [LICENSE](LICENSE) for details.
+
+---
+
+## 👤 Author
+
+**Sunil Prasad Regmi**
+
+* 🌐 [LinkedIn](https://www.linkedin.com/in/sunil-prasad-regmi/)
+* 📘 [Facebook](https://www.facebook.com/sunilprregmi/)
+* 📲 [Telegram](https://t.me/sunilpr)
